@@ -1,9 +1,10 @@
-function helloWorld() {
-    let element = document.createElement('div');
+import React from "react";
+import ReactDOM from "react-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import App from "./components/App";
 
-    element.innerHTML = 'Hello world';
+const Index = () => {
+  return <App />;
+};
 
-    return element;
-}
-
-document.body.appendChild(helloWorld());
+ReactDOM.render(<Index />, document.getElementById("index"));
