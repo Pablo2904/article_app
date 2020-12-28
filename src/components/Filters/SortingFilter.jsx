@@ -2,9 +2,11 @@ import React from "react";
 import CaretDown from "../icons/CaretDown";
 
 const SortingFilter = ({ onHandleClick }) => {
+  const title = "Sort by Date";
+
   return (
     <div className="d-flex">
-      <span>Sort by Date</span>
+      <span>{title}</span>
       <div className="d-inline-flex flex-column ml-2" onClick={onHandleClick}>
         <CaretDown className="rotate" />
         <CaretDown />

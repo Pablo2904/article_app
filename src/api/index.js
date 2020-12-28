@@ -2,7 +2,7 @@ import { addSortableDate } from "../utils";
 
 const fetchData = async (path) => {
   const URL = `http://localhost:6010${path}`;
-  const errMessage = "Something went wrong";
+  const errMessage = `Couldnt fetch from ${path}`;
   try {
     const response = await fetch(URL);
     const { ok } = await response;
@@ -12,7 +12,7 @@ const fetchData = async (path) => {
       ? { articles: addSortableDate(data.articles) }
       : { message: errMessage };
   } catch (error) {
-    return { message: error.message };
+    return { message: errMessage };
   }
 };
 
