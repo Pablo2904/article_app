@@ -15,3 +15,9 @@ li {
 .rotate {
   transform: rotate(180deg);
 }
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
