@@ -6,7 +6,9 @@ const SortingFilter = ({ onHandleClick }) => {
 
   return (
     <div className="d-flex">
-      <span>{title}</span>
+      <span>
+        <u>{title}</u>
+      </span>
       <div className="d-inline-flex flex-column ml-2" onClick={onHandleClick}>
         <CaretDown className="rotate" />
         <CaretDown />

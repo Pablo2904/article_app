@@ -2,7 +2,8 @@ import React from "react";
 
 const Article = ({ article }) => {
   const { date, image, title, preamble } = article;
-  const splitedDate = date.split(" ");
+  const splitter = " ";
+  const splitedDate = date.split(splitter);
   const day = splitedDate[0];
   const month = splitedDate[1];
   const year = splitedDate[2];

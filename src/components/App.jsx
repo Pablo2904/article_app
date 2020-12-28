@@ -3,8 +3,8 @@ import Articles from "./Articles/Articles";
 import CheckboxFilter from "./Filters/CheckboxFilter";
 import SortingFilter from "./Filters/SortingFilter";
 import DefualtError from "./ErrorPages/DefualtError";
-import { Api, getArticlesFashion, getArticlesSports } from "../api";
-import { sortByProps, groupResultBy } from "../utils/index";
+import { getArticlesFashion, getArticlesSports } from "../api";
+import { sortByProps, groupResults } from "../utils/index";
 import {
   checkboxesConfig,
   sortValuesEnum,
@@ -47,8 +47,10 @@ const App = () => {
           getArticlesFashion(),
           getArticlesSports(),
         ]);
-        setError(groupResultBy(result, "message"));
-        setArticles(groupResultBy(result, "articles"));
+        const byMessage = "message";
+        const byArticles = "articles";
+        setError(groupResults(result, byMessage));
+        setArticles(groupResults(result, byArticles));
       }
     };
     setError([]);
@@ -56,7 +58,9 @@ const App = () => {
   }, [checked]);
 
   useEffect(() => {
-    const sortingProp = sortBy.length > 0 ? "sortableDate" : "id";
+    const sortableDate = "sortableDate";
+    const id = "id";
+    const sortingProp = sortBy.length > 0 ? sortableDate : id;
     articles &&
       articles.length > 0 &&
       setArticles([...sortByProps(articles, sortingProp, sortBy)]);

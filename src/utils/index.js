@@ -21,7 +21,7 @@ export const sortByProps = (articles, sortByProps, direction) => {
   });
 };
 
-export const groupResultBy = (arr, prop) => {
+export const groupResults = (arr, prop) => {
   return [].concat(
     ...arr.reduce((r, el) => {
       if (!el[prop]) return r;
