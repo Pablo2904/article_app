@@ -3,29 +3,32 @@ import Articles from "./Articles/Articles";
 import CheckboxFilter from "./Filters/CheckboxFilter";
 import SortingFilter from "./Filters/SortingFilter";
 import DefualtError from "./ErrorPages/DefualtError";
-import { checkboxesConfig } from "./Filters/checkboxesConfig";
-import { getArticlesFashion, getArticlesSports } from "../api";
-import { sortByProps } from "../utils/index";
+import { Api, getArticlesFashion, getArticlesSports } from "../api";
+import { sortByProps, groupResultBy } from "../utils/index";
+import {
+  checkboxesConfig,
+  sortValuesEnum,
+  checkboxesEnum,
+} from "../utils/configurations";
 
 const App = () => {
   const firstCheckboxId =
     checkboxesConfig && checkboxesConfig[0] && checkboxesConfig[0].id;
   const [checked, setChecked] = useState(firstCheckboxId);
   const [articles, setArticles] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
   const [sortBy, setSortBy] = useState("");
-
   const isError = error.length > 0;
 
   const onHandleClick = () => {
     switch (sortBy) {
       case "":
-        setSortBy("asc");
+        setSortBy(sortValuesEnum.asc);
         break;
-      case "asc":
-        setSortBy("desc");
+      case sortValuesEnum.asc:
+        setSortBy(sortValuesEnum.desc);
         break;
-      case "desc":
+      case sortValuesEnum.desc:
       default:
         setSortBy("");
         break;
@@ -33,20 +36,23 @@ const App = () => {
   };
   useEffect(() => {
     const getArticles = async () => {
-      const { message, articles } =
-        checked === firstCheckboxId
-          ? await getArticlesFashion()
-          : await getArticlesSports();
-      if (message) {
-        setError(message);
-        setChecked("");
+      if (checked === checkboxesEnum.fashion) {
+        const { message, articles } = await getArticlesFashion();
+        message ? setError([message]) : setArticles(articles);
+      } else if (checked === checkboxesEnum.sports) {
+        const { message, articles } = await getArticlesSports();
+        message ? setError([message]) : setArticles(articles);
       } else {
-        setError("");
-        setArticles(articles);
+        const result = await Promise.all([
+          getArticlesFashion(),
+          getArticlesSports(),
+        ]);
+        setError(groupResultBy(result, "message"));
+        setArticles(groupResultBy(result, "articles"));
       }
     };
-
-    checked.length > 0 && getArticles();
+    setError([]);
+    getArticles();
   }, [checked]);
 
   useEffect(() => {
@@ -57,7 +63,9 @@ const App = () => {
   }, [sortBy]);
 
   const onHandleChange = (e) => {
-    setChecked(e.target && e.target.id);
+    const id = e.target && e.target.id;
+    const newValue = checked === id ? "" : id;
+    setChecked(newValue);
   };
   return (
     <div className="container-xl ml-0 ml-xl-3">
@@ -69,11 +77,8 @@ const App = () => {
           <SortingFilter onHandleClick={onHandleClick} />
         </div>
         <div className="col-12 col-md-10 order-3">
-          {isError ? (
-            <DefualtError errorMsg={error} />
-          ) : (
-            <Articles articles={articles} />
-          )}
+          {isError && <DefualtError errorMsgs={error} />}
+          <Articles articles={articles} />
         </div>
       </div>
     </div>

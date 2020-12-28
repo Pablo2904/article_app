@@ -1,13 +1,14 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import { checkboxesConfig } from "./checkboxesConfig";
+import { checkboxesConfig } from "../../utils/configurations";
 
 const CheckboxFilter = ({ checked, onHandleChange }) => {
+  const title = "Data sources";
   return (
     <div>
       <Form>
         <span>
-          <u>Data sources</u>
+          <u>{title}</u>
         </span>
         <Form.Group>
           {checkboxesConfig &&

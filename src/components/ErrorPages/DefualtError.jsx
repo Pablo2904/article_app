@@ -1,11 +1,12 @@
 import React from "react";
 
-const DefualtError = ({ errorMsg }) => {
-  const error = String(errorMsg);
+const DefualtError = ({ errorMsgs }) => {
   return (
     <div className="text-warning">
-      <h5>{error}</h5>
-      <p>Please try again later</p>
+      {errorMsgs &&
+        errorMsgs.map((msg) => {
+          return <p key={msg}>{msg}</p>;
+        })}
     </div>
   );
 };
