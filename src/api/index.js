@@ -1,3 +1,5 @@
+import { addSortableDate } from "../utils";
+
 const fetchData = async (path) => {
   const URL = `http://localhost:6010${path}`;
   const errMessage = "Something went wrong";
@@ -6,7 +8,9 @@ const fetchData = async (path) => {
     const { ok } = await response;
     const data = await response.json();
 
-    return ok ? { ...data } : { message: errMessage };
+    return ok
+      ? { articles: addSortableDate(data.articles) }
+      : { message: errMessage };
   } catch (error) {
     return { message: error.message };
   }

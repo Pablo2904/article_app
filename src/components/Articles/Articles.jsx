@@ -1,14 +1,13 @@
 import React from "react";
 import Article from "./Article";
 
-const Articles = () => {
-  const articlesNumber = new Array(5).fill(1);
-
+const Articles = ({ articles }) => {
   return (
     <ul className="w-100 d-flex flex-wrap justify-content-center">
-      {articlesNumber.map(() => {
-        return <Article key={Math.random()} />;
-      })}
+      {articles &&
+        articles.map((article) => {
+          return <Article key={article.id} article={article} />;
+        })}
     </ul>
   );
 };

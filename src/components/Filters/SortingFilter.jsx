@@ -1,27 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import CaretDown from "../icons/CaretDown";
 
-const SortingFilter = () => {
-  const [sortBy, setSortBy] = useState("");
-  const handleOnClick = () => {
-    switch (sortBy) {
-      case "":
-        setSortBy("asc");
-        break;
-      case "asc":
-        setSortBy("desc");
-        break;
-      case "desc":
-      default:
-        setSortBy("");
-        break;
-    }
-  };
-
+const SortingFilter = ({ onHandleClick }) => {
   return (
     <div className="d-flex">
       <span>Sort by Date</span>
-      <div className="d-inline-flex flex-column ml-2" onClick={handleOnClick}>
+      <div className="d-inline-flex flex-column ml-2" onClick={onHandleClick}>
         <CaretDown className="rotate" />
         <CaretDown />
       </div>

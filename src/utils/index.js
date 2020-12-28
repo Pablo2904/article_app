@@ -1,15 +1,22 @@
-export const convertDate = (date) => {
-  const noDate = "Date no available";
-  if (!isString(date)) return noDate;
+export const addSortableDate = (articles) => {
+  return articles.map((article) => {
+    const rawDate = article.date.split(" ");
+    const normalizedDay = rawDate[0].replace(".", "");
+    const normalizedMonth = monthMapping[rawDate[1]];
+    const rawYear = rawDate[2];
+    const sortableDate = `${normalizedMonth}/${normalizedDay}/${rawYear}`;
 
-  const rawDate = date.split(" ");
-  if (rawDate.length !== 2) return noDate;
+    return { ...article, sortableDate };
+  });
+};
 
-  const normalizedDay = rawDate[0].replace(".", "");
-  const normalizedMonth = monthMapping[rawDate[1]];
-  const rawYear = rawDate[2];
-
-  return `${normalizedMonth}/${normalizedDay}/${rawYear}`;
+export const sortByProps = (articles, sortByProps, direction) => {
+  return articles.sort((a, b) => {
+    const variables = direction === "asc" ? [a, b] : [b, a];
+    return (
+      new Date(variables[0][sortByProps]) - new Date(variables[1][sortByProps])
+    );
+  });
 };
 
 const isString = (str) => typeof str === "string" || str instanceof String;

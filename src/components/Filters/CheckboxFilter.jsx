@@ -1,16 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 import { checkboxesConfig } from "./checkboxesConfig";
 
-const CheckboxFilter = () => {
-  const firstCheckboxId =
-    checkboxesConfig && checkboxesConfig[0] && checkboxesConfig[0].id;
-  const [checked, setChecked] = useState(firstCheckboxId);
-
-  const onHandleChange = (e) => {
-    setChecked(e.target.id);
-  };
-
+const CheckboxFilter = ({ checked, onHandleChange }) => {
   return (
     <div>
       <Form>
